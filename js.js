@@ -1,43 +1,53 @@
+function createTableFromJson() {
 
-function CreateTableFromJSON() {
-    var details = [
-        {
-            "ID": "1",
-            "First Name": "Barleen",
-            "Middle Name": "",
-            "Last Name": "Dhaliwal",
-            "Email": "barleen.dhaliwal@sourcefuse.com",
-            "Phone Number": "7009047379",
-            "Role": "Junior Engineer",
-            "Address": "4133"
+    //following camelCase - JSON naming convention
+    const DATA = [{
+            "id": "1",
+            "firstName": "Barleen",
+            "middleName": "",
+            "lastName": "Dhaliwal",
+            "email": "barleen-d@sourcefuse.com",
+            "phoneNumber": "888888880",
+            "role": "Junior Engineer",
+            "address": "4133"
         },
         {
-            "ID": "2",
-            "First Name": "Jai",
-            "Middle Name": "",
-            "Last Name": "Sharma",
-            "Email": "xyz@sourcefuse.com",
-            "Phone Number": "900900090",
-            "Role": "Junior Engineer",
-            "Address": "8A"
+            "id": "2",
+            "firstName": "Jai",
+            "middleName": "K",
+            "lastName": "Sharma",
+            "email": "xyz@sourcefuse.com",
+            "phoneNumber": "900900090",
+            "role": "Junior Engineer",
+            "address": "8A"
         },
         {
-            "ID": "3",
-            "First Name": "Harry",
-            "Middle Name": "Singh",
-            "Last Name": "Chahal",
-            "Email": "abc@abc.com",
-            "Phone Number": "809090809",
-            "Role": "Junior Engineer",
-            "Address": "Mohali"
+            "id": "3",
+            "firstName": "Harry",
+            "middleName": "Singh",
+            "lastName": "Chahal",
+            "email": "abc@abc.com",
+            "phoneNumber": "809090809",
+            "role": "Junior Engineer",
+            "address": "Mohali"
+        },
+        {
+            "id": "4",
+            "firstName": "Barry",
+            "middleName": "Singh",
+            "lastName": "Sharma",
+            "email": "xyz@abc.com",
+            "phoneNumber": "80909079",
+            "role": "Engineer",
+            "address": "Mohali"
         }
     ]
 
     // EXTRACT VALUE FOR HTML HEADER. 
-    // ('Book ID', 'Book Name', 'Category' and 'Price')
-    var col = [];
-    for (var i = 0; i < details.length; i++) {
-        for (var key in details[i]) {
+
+    let col = [];
+    for (let i = 0; i < DATA.length; i++) {
+        for (let key in DATA[i]) {
             if (col.indexOf(key) === -1) {
                 col.push(key);
             }
@@ -45,131 +55,130 @@ function CreateTableFromJSON() {
     }
 
     // CREATE DYNAMIC TABLE.
-    var table = document.createElement("table");
-    table.className='table table-hover';
+    let table = document.createElement("table");
+    table.className = 'table table-hover';
     // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
 
-    var tr = table.insertRow(-1);                   // TABLE ROW.
+    let tr = table.insertRow(-1); // TABLE ROW.
 
-    for (var i = 0; i < col.length; i++) {
-        var th = document.createElement("th");      // TABLE HEADER.
+    for (let i = 0; i < col.length; i++) {
+        let th = document.createElement("th"); // TABLE HEADER.
         th.innerHTML = col[i];
         tr.appendChild(th);
     }
 
     // ADD JSON DATA TO THE TABLE AS ROWS.
-    for (var i = 0; i < details.length; i++) {
+    for (let i = 0; i < DATA.length; i++) {
 
         tr = table.insertRow(-1);
-        tr.id="row"+i;
-        
+        tr.id = "row" + i;
+
         //fetchin from JSON and putting in table
-        for (var j = 0; j < col.length; j++) {
-            var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = details[i][col[j]];
-            tabCell.className="editable";
+        for (let j = 0; j < col.length; j++) {
+            let tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = DATA[i][col[j]];
+            tabCell.className = "editable";
         }
 
 
 
         //creating edit button for each row
-        var cell_for_edit_button = tr.insertCell(-1);
-        var edit_button = document.createElement('button');
-        edit_button.type = 'button';
-        edit_button.innerHTML = 'Edit';
-        edit_button.addEventListener('click', function(){
+        let cellForEditButton = tr.insertCell(-1);
+        let editButton = document.createElement('button');
+        editButton.type = 'button';
+        editButton.innerHTML = 'Edit';
+        editButton.addEventListener('click', function() {
 
-            // var trid = $(this).closest('tr').attr('id'); // table row ID 
-            
-             
+            // let trid = $(this).closest('tr').attr('id'); // table row ID 
+
+
             // console.log($(this).closest("tr")[0].rowIndex);
-            $(this).closest('tr').find(".editable").attr('contenteditable','true');
-            $(this).closest('tr').css("background-color","#EBF4FA");
-            $(this).closest('tr').find( "td" ).css("display","");
+            $(this).closest('tr').find(".editable").attr('contenteditable', 'true');
+            $(this).closest('tr').css("background-color", "#EBF4FA");
+            $(this).closest('tr').find("td").css("display", "");
 
-            
+
         });
-        cell_for_edit_button.appendChild(edit_button);
+        cellForEditButton.appendChild(editButton);
 
-        
-        
-        
+
+
+
         //creating delete button for each row
-        var cell_for_delete_button = tr.insertCell(-1);
-        var delete_button = document.createElement('button');
-        delete_button.type = 'button';
-        delete_button.innerHTML = 'Delete';
-        delete_button.id='delete_button_'+i;
-        delete_button.addEventListener('click', function(){
-            
-            var trid = $(this).closest('tr').attr('id'); // table row ID 
+        let cellForDeleteButton = tr.insertCell(-1);
+        let deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.innerHTML = 'Delete';
+        deleteButton.id = 'deleteButton' + i;
+        deleteButton.addEventListener('click', function() {
+
+            let trid = $(this).closest('tr').attr('id'); // table row ID 
             //console.log(trid);
-            $('#'+trid).hide();
+            $('#' + trid).hide();
         });
-        cell_for_delete_button.appendChild(delete_button);
+        cellForDeleteButton.appendChild(deleteButton);
 
 
 
 
         //Creating save button and hiding it
-        var cell_for_save_button = tr.insertCell(-1);
-        var save_button = document.createElement('button');
-        save_button.type = 'button';
-        save_button.innerHTML = 'Save';
-        save_button.id='save_button_'+i;
-        cell_for_save_button.className='save_button_column';
-        cell_for_save_button.appendChild(save_button);
-        cell_for_save_button.style.display='none';
-        save_button.addEventListener('click', function(){
+        let cellForSaveButton = tr.insertCell(-1);
+        let saveButton = document.createElement('button');
+        saveButton.type = 'button';
+        saveButton.innerHTML = 'Save';
+        saveButton.id = 'saveButton' + i;
+        cellForSaveButton.className = 'saveButtonColumn';
+        cellForSaveButton.appendChild(saveButton);
+        cellForSaveButton.style.display = 'none';
+        saveButton.addEventListener('click', function() {
 
-            $(this).closest('tr').css("background-color","white");
-            $(this).closest('tr').find( ".save_button_column" ).css("display","none");
-            $(this).closest('tr').find( ".cancel_button_column" ).css("display","none");
+            $(this).closest('tr').css("background-color", "white");
+            $(this).closest('tr').find(".saveButtonColumn").css("display", "none");
+            $(this).closest('tr').find(".cancelButtonColumn").css("display", "none");
 
-            
-            
+
+
         });
-        
+
 
 
 
 
         //Creating cancel button and hiding it
-        var cell_for_cancel_button = tr.insertCell(-1);
-        var cancel_button = document.createElement('button');
-        cancel_button.type = 'button';
-        cancel_button.innerHTML = 'Cancel';
-        cancel_button.id='cancel_button_'+i;
-        cell_for_cancel_button.className='cancel_button_column'
-        cell_for_cancel_button.appendChild(cancel_button);
-        cell_for_cancel_button.style.display='none';
-        cancel_button.addEventListener('click', function(){
+        let cellForCancelButton = tr.insertCell(-1);
+        let cancelButton = document.createElement('button');
+        cancelButton.type = 'button';
+        cancelButton.innerHTML = 'Cancel';
+        cancelButton.id = 'cancelButton' + i;
+        cellForCancelButton.className = 'cancelButtonColumn'
+        cellForCancelButton.appendChild(cancelButton);
+        cellForCancelButton.style.display = 'none';
+        cancelButton.addEventListener('click', function() {
 
-            $(this).closest('tr').css("background-color","white");
-            $(this).closest('tr').find( ".save_button_column" ).css("display","none");
-            $(this).closest('tr').find( ".cancel_button_column" ).css("display","none");
+            $(this).closest('tr').css("background-color", "white");
+            $(this).closest('tr').find(".saveButtonColumn").css("display", "none");
+            $(this).closest('tr').find(".cancelButtonColumn").css("display", "none");
 
-            var current_row = $(this).closest("tr")[0].rowIndex;
-           
-            //console.log(current_row);
+            let currentRow = $(this).closest("tr")[0].rowIndex;
 
-            for(var j=0;j<col.length;j++)
-            {
-                var data=details[current_row-1][col[j]];
-                // console.log(data);
-                $(this).closest('tr').children( ".editable" ).eq(j).text(data);
+            //console.log(currentRow);
+
+            for (let j = 0; j < col.length; j++) {
+                let content = DATA[currentRow - 1][col[j]];
+                // console.log(content);
+                $(this).closest('tr').children(".editable").eq(j).text(content);
             }
 
-            
+
         });
-        
+
 
 
     }
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-    var divContainer = document.getElementById("showData");
+    let divContainer = document.getElementById("showData");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
-    document.getElementById("show_data_button").value = "Refresh";
+    document.getElementById("showDataButton").value = "Refresh";
 }
